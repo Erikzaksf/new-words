@@ -1,33 +1,37 @@
-require('pry')
+
 
 class Word
-  @@list = []
-  attr_accessor :words, :definition
 
-  def initialize(words, definition)
-    @words = words
-    @definition = definition
+  @@list = []
+  attr_reader :new_word, :id
+  attr_accessor :definitions
+
+
+  def initialize(attributes)
+    @new_word = attributes.fetch(:new_word)
+    @definitions = [attributes.fetch(:definition)]
     @id = @@list.length + 1
   end
 
-  def self.find(id)
-    word_id = id.to_i()
+  def save
+    @@list.push(self)
+  end
+
+  def self.find(word_id)
     @@list.each do |word|
-      if word.id == word_id
+      if word.id == word_id.to_i
         return word
       end
     end
   end
 
-  def self.all()
-    @@list.sort {|word1, word2| word1.definition <=> word2.definition}
-  end
-
-  def save()
-    @@list.push(self)
-  end
-
-  def self.clear()
+  def self.clear
     @@list = []
   end
+
+
+  def self.all
+    @@list
+  end
+
 end

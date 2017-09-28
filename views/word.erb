@@ -1,1 +1,22 @@
-<h1><%= @words.name %></h1>
+<div class="container">
+
+
+<h1>Ready to learn some new words?</h1>
+
+<% @list.each do |word| %>
+    <h4><a href="/word_meanings/<%= word.id%>"><%= word.new_word %></a></h4>
+<% end %>
+
+<h2>Add a word you would like to learn.</h2>
+<form action="/" method="post">
+  <div class="form-group">
+    <label for="new_word">Word</label>
+    <input id="new_word" name="new_word" class="form-control" type="text">
+  </div>
+  <div class="form-group">
+    <label for="definition">Definition</label>
+    <input id="definition" name="definition" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Save</button>
+</form>
+</div>

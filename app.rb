@@ -2,29 +2,37 @@ require('sinatra')
 require('sinatra/reloader')
 also_reload('lib/**/*.rb')
 require('./lib/words')
-require('pry')
-
-
-
 
 
 get('/') do
-  @list = Word.all()
-  erb(:output)
+
+  @list = Word.all
+  erb(:word)
 end
 
 post('/') do
-  words = params["words"]
-  definition = params["definition"].to_i
-  word = Word.new(words, definition)
-  word.save()
-  @list = Word.all()
-
-
-  erb(:output)
+  new_word = params["new_word"]
+  definition = params["definition"]
+  Word.new({new_word: new_word, definition: definition}).save
+  @list = Word.all
+  erb(:word)
 end
 
-get('/word/:id') do
-  @words = Word.find(params[:id])
+post('/clear') do
+  Word.clear
+
+  @list = Word.all
   erb(:word)
+end
+
+get('/word_meanings/:id') do
+  @word = Word.find(params[:id])
+  erb(:word_meanings)
+end
+
+post('/word_meanings/:id') do
+  definition = params["definition"]
+  @word = Word.find(params[:id])
+  @word.definitions = @word.definitions.push(definition)
+  erb(:word_meanings)
 end

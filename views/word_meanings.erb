@@ -1,0 +1,20 @@
+<div class="container">
+
+
+<h2><%= @word.new_word%></h2>
+ <% @word.definitions.each do |definition| %>
+  <h4><%= definition %></h4>
+<% end %>
+<br>
+<br>
+<h2>Found another meaning, feel free to add it!</h2>
+<form action='/word_meanings/<%= @word.id%>' method="post">
+  <div class="form-group">
+    <label for="definition"></label>
+    <input id="definition" name="definition" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Save</button>
+</form>
+<br>
+<a href="/">Back to the beginning</a>
+</div>
